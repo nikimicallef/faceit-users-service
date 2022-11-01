@@ -1,0 +1,18 @@
+# Used for when the infrastructure is running on docker but the application is running locally
+
+mongodb.encrypt:
+  keys:
+    - version: 1
+      key: hqHKBLV83LpCqzKpf8OvutbCs+O5wX5BPu3btWpEvXA=
+
+spring:
+  data:
+    mongodb:
+      uuid-representation: standard
+      auto-index-creation: true
+      database: faceit-users
+  kafka:
+    bootstrap-servers: localhost:9093
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

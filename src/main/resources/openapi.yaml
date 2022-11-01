@@ -1,0 +1,240 @@
+openapi: "3.0.3"
+info:
+  title: FACEIT Users API
+  version: "1.0.0"
+
+servers:
+  - url: http://localhost:8080
+    description: Local environment
+
+paths:
+  /users:
+    get:
+      description: "List of all users available in the system"
+      operationId: getUsers
+      parameters:
+        - in: query
+          name: country
+          description: "Retrieves only users whose country matches this criteria"
+          required: false
+          schema:
+            type: string
+            example: "UK"
+        - in: query
+          name: page
+          description: "Determines what page to return in the response. This value is 0 based."
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - in: query
+          name: pageSize
+          description: "Determines number of entries to return within a page."
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "List of all users"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserResponse"
+        "500":
+          description: "Internal error. Please try again later"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      description: "Creates a new user in the system"
+      operationId: postUsers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        "201":
+          description: "Newly created user"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "500":
+          description: "Internal error. Please try again later"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          example: "d2a7924e-765f-4949-bc4c-219c956d0f8b"
+    get:
+      description: "Retrieves user with specified ID"
+      operationId: getUser
+      responses:
+        "200":
+          description: "User retrieved"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "404":
+          description: "Specified user could not be found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: "Internal error. Please try again later"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      description: "Delete user with specified ID"
+      operationId: deleteUser
+      responses:
+        "204":
+          description: "User deleted"
+        "404":
+          description: "Specified user could not be found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: "Internal error. Please try again later"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      description: "Update user's details"
+      operationId: updateUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        "200":
+          description: "User updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "404":
+          description: "Specified user could not be found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: "Internal error. Please try again later"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    # NOTE: Wanted to use inheritance/allOf but the Swagger Generator has a bug and this is not supported.
+    # https://github.com/OpenAPITools/openapi-generator/issues/10010
+    UserRequest:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - email
+        - country
+        - password
+      properties:
+        firstName:
+          description: "User's first name"
+          type: string
+          example: "Alice"
+        lastName:
+          description: "User's last name"
+          type: string
+          example: "Bob"
+        nickname:
+          description: "User's nickname"
+          type: string
+          example: "AB123"
+        email:
+          description: "User's email address"
+          type: string
+          format: email
+          example: "alice@bob.com"
+        country:
+          description: "Country where the user resides"
+          type: string
+          example: "UK"
+        password:
+          description: "User account password"
+          type: string
+          format: password
+          example: "supersecurepassword"
+    UserResponse:
+      type: object
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - country
+      properties:
+        id:
+          description: "User's ID"
+          type: string
+          format: uuid
+          example: "d2a7924e-765f-4949-bc4c-219c956d0f8b"
+        firstName:
+          description: "User's first name"
+          type: string
+          example: "Alice"
+        lastName:
+          description: "User's last name"
+          type: string
+          example: "Bob"
+        nickname:
+          description: "User's nickname"
+          type: string
+          example: "AB123"
+        email:
+          description: "User's email address"
+          type: string
+          format: email
+          example: "alice@bob.com"
+        country:
+          description: "Country where the user resides"
+          type: string
+          example: "UK"
+    Error:
+      type: object
+      description: "Represents an error/problem encountered by the server."
+      required:
+        - message
+        - validationErrors
+      properties:
+        message:
+          description: "A description of the error encountered by the server"
+          type: string
+          example: "The entity specified has not been found"
+        validationErrors:
+          description: "A list of one or more validation errors due to possible incorrect data within the request"
+          type: array
+          items:
+            type: string
+            example: "The id field should not be specified within this request"

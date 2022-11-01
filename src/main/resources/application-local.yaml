@@ -1,0 +1,8 @@
+# Used for when both the application and the infrastructure are running on docker
+
+spring:
+  data:
+    mongodb:
+      host: my_mongodb
+  kafka:
+    bootstrap-servers: my_kafka:9092

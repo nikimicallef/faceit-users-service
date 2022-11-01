@@ -1,0 +1,510 @@
+{
+	"info": {
+		"_postman_id": "414bbcbb-466e-41a3-ac05-da82d59799a9",
+		"name": "FACEIT Users Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check attributes\", function () {\r",
+							"    pm.expect(response.status).to.eql(\"UP\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/actuator/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User Niki",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check attributes\", function () {\r",
+							"    pm.expect(response.id).to.not.be.null;\r",
+							"    pm.expect(response.firstName).to.eql(\"Niki\");\r",
+							"    pm.expect(response.lastName).to.eql(\"Micallef\");\r",
+							"    pm.expect(response.nickname).to.eql(\"Nik\");\r",
+							"    pm.expect(response.email).to.eql(\"nikmic94@gmail.com\");\r",
+							"    pm.expect(response.country).to.eql(\"Malta\");\r",
+							"    pm.expect(response.password).to.be.undefined;\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set('USER-ID-NIKI', response.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"Niki\",\r\n    \"lastName\":\"Micallef\",\r\n    \"nickname\":\"Nik\",\r\n    \"email\":\"nikmic94@gmail.com\",\r\n    \"country\":\"Malta\",\r\n    \"password\":\"abc123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check attributes\", function () {\r",
+							"    pm.expect(response.id).to.not.be.null;\r",
+							"    pm.expect(response.firstName).to.eql(\"Niki\");\r",
+							"    pm.expect(response.lastName).to.eql(\"Micallef\");\r",
+							"    pm.expect(response.nickname).to.eql(\"Nik\");\r",
+							"    pm.expect(response.email).to.eql(\"nikmic94@gmail.com\");\r",
+							"    pm.expect(response.country).to.eql(\"Malta\");\r",
+							"    pm.expect(response.password).to.be.undefined;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/{{USER-ID-NIKI}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"{{USER-ID-NIKI}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check attributes\", function () {\r",
+							"    pm.expect(response.id).to.not.be.null;\r",
+							"    pm.expect(response.firstName).to.eql(\"Alice\");\r",
+							"    pm.expect(response.lastName).to.eql(\"Bob\");\r",
+							"    pm.expect(response.nickname).to.eql(\"AB123\");\r",
+							"    pm.expect(response.email).to.eql(\"alice@bob.com\");\r",
+							"    pm.expect(response.country).to.eql(\"UK\");\r",
+							"    pm.expect(response.password).to.be.undefined;\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set('USER-ID-TEST', response.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"Alice\",\r\n    \"lastName\":\"Bob\",\r\n    \"nickname\":\"AB123\",\r\n    \"email\":\"alice@bob.com\",\r\n    \"country\":\"UK\",\r\n    \"password\":\"supersecurepassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User Other",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check attributes\", function () {\r",
+							"    pm.expect(response.id).to.not.be.null;\r",
+							"    pm.expect(response.firstName).to.eql(\"John\");\r",
+							"    pm.expect(response.lastName).to.eql(\"Doe\");\r",
+							"    pm.expect(response.nickname).to.eql(\"JDoe\");\r",
+							"    pm.expect(response.email).to.eql(\"john@doe.com\");\r",
+							"    pm.expect(response.country).to.eql(\"USA\");\r",
+							"    pm.expect(response.password).to.be.undefined;\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set('USER-ID-OTHER', response.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"John\",\r\n    \"lastName\":\"Doe\",\r\n    \"nickname\":\"JDoe\",\r\n    \"email\":\"john@doe.com\",\r\n    \"country\":\"USA\",\r\n    \"password\":\"mypassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users Unfiltered",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check attributes\", function () {\r",
+							"    pm.expect(response.length).to.equal(3);\r",
+							"    let userIds=[]\r",
+							"    _.each(response, (user)=>{\r",
+							"        userIds.push(user.id)\r",
+							"    });\r",
+							"    console.log(userIds);\r",
+							"    pm.expect(userIds).to.contain(pm.collectionVariables.get(\"USER-ID-NIKI\"));\r",
+							"    pm.expect(userIds).to.contain(pm.collectionVariables.get(\"USER-ID-TEST\"));\r",
+							"    pm.expect(userIds).to.contain(pm.collectionVariables.get(\"USER-ID-OTHER\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users Paged",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check attributes\", function () {\r",
+							"    pm.expect(response.length).to.equal(2);\r",
+							"    let userIds=[]\r",
+							"    _.each(response, (user)=>{\r",
+							"        userIds.push(user.id)\r",
+							"    });\r",
+							"    console.log(userIds);\r",
+							"    pm.expect(userIds).to.contain(pm.collectionVariables.get(\"USER-ID-NIKI\"));\r",
+							"    pm.expect(userIds).to.contain(pm.collectionVariables.get(\"USER-ID-TEST\"));\r",
+							"    pm.expect(userIds).to.not.contain(pm.collectionVariables.get(\"USER-ID-OTHER\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users?page=0&pageSize=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "pageSize",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users Filtered",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check attributes\", function () {\r",
+							"    pm.expect(response.length).to.equal(1);\r",
+							"    pm.expect(response[0].id).to.contain(pm.collectionVariables.get(\"USER-ID-TEST\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users?country=UK",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "country",
+							"value": "UK"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Niki",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check attributes\", function () {\r",
+							"    pm.expect(response.id).to.not.be.null;\r",
+							"    pm.expect(response.firstName).to.eql(\"Niki\");\r",
+							"    pm.expect(response.lastName).to.eql(\"Doe\");\r",
+							"    pm.expect(response.nickname).to.eql(\"Nikname\");\r",
+							"    pm.expect(response.email).to.eql(\"nikmic@gmail.com\");\r",
+							"    pm.expect(response.country).to.eql(\"Austria\");\r",
+							"    pm.expect(response.password).to.be.undefined;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"Niki\",\r\n    \"lastName\":\"Doe\",\r\n    \"nickname\":\"Nikname\",\r\n    \"email\":\"nikmic@gmail.com\",\r\n    \"country\":\"Austria\",\r\n    \"password\":\"abc123456!£\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/{{USER-ID-NIKI}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"{{USER-ID-NIKI}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check attributes\", function () {\r",
+							"    pm.expect(pm.response.body).to.be.undefined;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/{{USER-ID-NIKI}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"{{USER-ID-NIKI}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "USER-ID-NIKI",
+			"value": ""
+		},
+		{
+			"key": "USER-ID-TEST",
+			"value": ""
+		},
+		{
+			"key": "USER-ID-OTHER",
+			"value": ""
+		}
+	]
+}
