@@ -1,4 +1,5 @@
-# Used for when the infrastructure is running on docker but the application is running locally
+# This is the default config. It contains default values which are overwritten within specific profiles.
+# It is however also used for when you want to run the application locally but run the infrastructure on docker.
 
 mongodb.encrypt:
   keys:

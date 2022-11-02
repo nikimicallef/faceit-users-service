@@ -107,7 +107,7 @@ public class UserService {
 	}
 
 	/**
-	 * Retrieves a specifiec user's details
+	 * Retrieves a specific user's details
 	 * If user with ID is not found, {@link EntityNotFoundException} is thrown
 	 *
 	 * @param userId ID of the user to retrieve
