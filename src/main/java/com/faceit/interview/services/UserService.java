@@ -61,7 +61,7 @@ public class UserService {
 		} else if (country != null && pageSize == null) {
 			final UserDbModel userDbModelExample = new UserDbModel();
 			userDbModelExample.setCountry(country);
-			final ExampleMatcher exampleMatcher = ExampleMatcher.matching().withMatcher("country", exact()); // TODO: Test
+			final ExampleMatcher exampleMatcher = ExampleMatcher.matching().withMatcher("country", exact());
 
 			retrievedData.addAll(userRepository.findAll(Example.of(userDbModelExample, exampleMatcher)));
 		} else if (country != null && pageSize != null) {
