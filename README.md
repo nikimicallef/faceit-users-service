@@ -1,5 +1,7 @@
 # FACEIT Interview Question - User Service
 
+The original interview question can be found in the file named `BE_Tech_Test_-_Java.pdf`.  
+
 ## Running the Application
 
 - Run the application by executing `docker compose up -d` in the command line. NOTE: The first execution might take a few minutes because all images and dependencies need to be download.
